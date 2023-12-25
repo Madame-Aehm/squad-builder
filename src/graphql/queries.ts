@@ -11,7 +11,8 @@ export const ALL_PEOPLE = gql`
         name
       }
     }
-  }`
+  }
+`
 
 export const GET_PERSON = gql`
   query getPerson ($id: ID!) {

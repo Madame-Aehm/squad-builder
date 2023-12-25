@@ -3,6 +3,8 @@ import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
 import Layout from '@/components/Layout';
+import { SquadContextProvider } from '@/context/squadContext';
+import { AuthContextProvider } from '@/context/authContext';
 
 export default function App({ Component, pageProps }: AppProps) {
   const client = new ApolloClient({
@@ -14,9 +16,13 @@ export default function App({ Component, pageProps }: AppProps) {
       <Head>
         <title>Squad Builder</title>
       </Head>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <AuthContextProvider>
+        <SquadContextProvider>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </SquadContextProvider>
+      </AuthContextProvider>
     </ApolloProvider>
   )
 }
