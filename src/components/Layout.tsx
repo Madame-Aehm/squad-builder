@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import LogButton from './LogButton'
+import LogButton from './IconButton'
 import Modal from './Modal'
 import LoginSignup from './LoginSignup'
 import { AuthContext } from '@/context/authContext'

@@ -97,17 +97,8 @@ interface Vehicle {
   consumables: string
 }
 
-export interface InputValues {
-  nameInput: string,
-  speciesInput: string
-}
-
-export interface User {
-  email: string
+export interface SavedSquad {
   id: string
-}
-
-export interface AuthUser {
-  user: User
-  token: string
+  name: string
+  characters: PersonSummary[]
 }

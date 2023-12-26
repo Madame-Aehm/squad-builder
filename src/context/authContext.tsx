@@ -1,7 +1,6 @@
-import { AuthUser } from "@/@types";
+import { AuthUser, User } from "@/@types/auth";
 import { GET_ACTIVE_USER } from "@/graphql/queries";
-import { ApolloClient, useQuery } from "@apollo/client";
-import { User } from "next-auth";
+import { useQuery } from "@apollo/client";
 import { Dispatch, PropsWithChildren, SetStateAction, createContext, useEffect, useState } from "react";
 
 interface AuthContext {
@@ -31,7 +30,6 @@ const AuthContextProvider = ({ children }: PropsWithChildren) => {
     setUser(null);
     localStorage.removeItem("token");
   }
-  console.log("active user", user);
 
   useEffect(() => {
     if (data) {

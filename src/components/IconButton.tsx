@@ -5,7 +5,7 @@ interface Props extends PropsWithChildren {
   clickHandler: () => void
 }
 
-function LogButton({ children, title, clickHandler }: Props) {
+function IconButton({ children, title, clickHandler }: Props) {
   return (
     <button onClick={clickHandler} className='flex flex-col justify-center items-center'>
       { children }
@@ -14,4 +14,4 @@ function LogButton({ children, title, clickHandler }: Props) {
   )
 }
 
-export default LogButton
+export default IconButton

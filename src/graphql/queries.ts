@@ -31,3 +31,20 @@ export const GET_ACTIVE_USER = gql`
     }
   }
 `
+
+export const GET_SQUADS = gql`
+  query getSquads {
+    squads {
+      id
+      name
+      characters {
+        id 
+        name 
+        species {
+          id 
+          name
+        }
+      }
+    }
+  }
+`

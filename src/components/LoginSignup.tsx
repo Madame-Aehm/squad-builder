@@ -1,14 +1,17 @@
-import React, { ChangeEvent, useContext, useEffect, useRef, useState } from 'react'
+import React, { ChangeEvent, useContext, useEffect, useState } from 'react'
 import Modal from './Modal';
 import { LOGIN, SIGNUP } from '@/graphql/mutations';
 import validateInputs from '@/utils/validateInputs';
 import { useMutation } from '@apollo/client';
-import { AuthUser } from '@/@types';
 import { AuthContext } from '@/context/authContext';
+import { AuthUser } from '@/@types/auth';
+import Input from './Input';
+import Form from './Form';
 
 type Props = {
   showLogin: boolean
   setShowLogin: React.Dispatch<React.SetStateAction<boolean>>
+  setShowSubmitSquad?: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 type Result = {
@@ -16,12 +19,15 @@ type Result = {
   login?: AuthUser
 }
 
-function LoginSignup({ showLogin, setShowLogin }: Props) {
+function LoginSignup({ showLogin, setShowLogin, setShowSubmitSquad }: Props) {
   const { userAuthenticated } = useContext(AuthContext);
 
   const [loginScreen, setLoginScreen] = useState(true);
-  const [emailInvalid, setEmailInvalid] = useState(false);
-  const [pwInvalid, setPwInvalid] = useState(false);
+
+  const [validation, setValidation] = useState({
+    email: true,
+    password: true
+  })
 
   const mutation = loginScreen ? LOGIN : SIGNUP;
   const [loginSignup, { data, loading, error }] = useMutation<Result>(mutation);
@@ -29,25 +35,23 @@ function LoginSignup({ showLogin, setShowLogin }: Props) {
   const [inputValues, setInputValues] = useState({
     email: "",
     password: ""
-  })
+  });
 
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    // inputValues.current = { ...inputValues.current, [e.target.type]: e.target.value }
     setInputValues({ ...inputValues, [e.target.type]: e.target.value })
-    e.target.type === "email" ? setEmailInvalid(false) : setPwInvalid(false);
+    e.target.type === "email" ? setValidation({ ...validation, email: true })
+    : setValidation({ ...validation, password: true });
   }
 
   const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErrorMessage("");
-    setEmailInvalid(false);
-    setPwInvalid(false);
+    setValidation({ email: true, password: true });
     const valid = validateInputs(inputValues);
     if (!valid.password || !valid.email) {
-      if (!valid.email) setEmailInvalid(true);
-      if (!valid.password) setPwInvalid(true);
+      setValidation(valid);
       return
     }
     try {
@@ -59,6 +63,9 @@ function LoginSignup({ showLogin, setShowLogin }: Props) {
       })
       setInputValues({ email: "", password: "" });
       setShowLogin(false);
+      if (setShowSubmitSquad) {
+        setShowSubmitSquad(true);
+      }
     } catch(e) {
       console.log(e)
     }
@@ -72,7 +79,6 @@ function LoginSignup({ showLogin, setShowLogin }: Props) {
   }, [data]);
 
   useEffect(() => {
-    console.log("error has changed")
     if (error) setErrorMessage(error.graphQLErrors[0].message);
   }, [error]);
 
@@ -80,32 +86,31 @@ function LoginSignup({ showLogin, setShowLogin }: Props) {
   return (
     <Modal state={showLogin} setState={setShowLogin} title={loginScreen ? "Login" : "Signup"}>
       <div className='w-60'>
-        <form 
-          noValidate
-          onSubmit={(e) => handleSubmit(e)}
-          className='flex flex-col gap-2'>
-          <input 
-            value={inputValues.email}
-            className={`rounded-md p-2 ${ emailInvalid ? "border-2 border-red-600" : "" }`}
-            placeholder='email' 
-            type='email' 
-            onChange={(e) => handleChange(e)} />
-          { emailInvalid && <small className='text-red-600 -mt-2'>Invalid Email</small> }
+        <Form
+          handleSubmit={handleSubmit}
+          errorMessage={errorMessage}
+          loading={loading}
+          submit={ loginScreen ? "Login" : "Signup" }
+        >
+          <Input 
+              value={inputValues.email}
+              placeholder={"email"}
+              type={"email"}
+              handleChange={handleChange}
+              validation={validation.email}
+              message='Invalid Email'
+            />
 
-          <input 
-          value={inputValues.password}
-            className={`rounded-md p-2 ${ pwInvalid ? "border-2 border-red-600" : "" }`}
-            placeholder='password' 
-            type='password' 
-            onChange={(e) => handleChange(e)} />
-          { pwInvalid && <small className='text-red-600 -mt-2'>Password must be at least 6 characters</small> }
+            <Input
+              value={inputValues.password} 
+              placeholder={"password"}
+              type={"password"}
+              handleChange={handleChange}
+              validation={validation.password}
+              message='Password must be at least 6 characters'
+            />
+        </Form>
 
-          <small className='text-red-600 text-center'>{ errorMessage }</small>
-          { loading ? 
-            <button className='p-2' disabled>Loading...</button> : 
-            <button className='p-2' type='submit'>{ loginScreen ? "Login" : "Signup" }</button>
-          }
-        </form>
         <p className='text-center'>{ loginScreen? "No account? " : "Already signed up? " }
           <span 
             className='font-bold hover:cursor-pointer'

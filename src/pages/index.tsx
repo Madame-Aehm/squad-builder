@@ -1,11 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { AllPeopleFetchResult, InputValues, PersonSummary } from "@/@types";
+import { AllPeopleFetchResult, PersonSummary } from "@/@types";
+import { InputValues } from "@/@types/auth";
 import Error from "@/components/Error";
 import Loading from "@/components/Loading";
 import Modal from "@/components/Modal";
 import PersonListItem from "@/components/PersonListItem";
 import Search from "@/components/Search";
 import SquadMember from "@/components/SquadMember";
+import SubmitSquad from "@/components/SubmitSquad";
 import { SquadContext } from "@/context/squadContext";
 import { ALL_PEOPLE } from "@/graphql/queries"
 import filterPeople from "@/utils/filterPeople";
@@ -48,6 +50,7 @@ export default function Home() {
         }
       </div>
       <button className="self-end font-bold" onClick={() => setShowRules(true)}>Read the Rules </button> 
+      <SubmitSquad />
       <Modal state={showRules} setState={setShowRules} title={"Rules: "}>
         <p className="mb-2">Search for your favourite characters and add them to a Squad!</p>
         <p className="mb-2">
@@ -56,7 +59,7 @@ export default function Home() {
         </p>
         <p className="mb-2">You squad must have between 3-5 members to be submitted.</p>
       </Modal>
-
+      
       <div className="self-stretch">
         <Search data={data} inputValues={inputValues} setInputValues={setInputValues} />
         <div className="bg-slate-50 mt-2 max-h-64 overflow-y-auto rounded-md">

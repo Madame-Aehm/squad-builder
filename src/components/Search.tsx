@@ -1,4 +1,5 @@
-import { AllPeopleFetchResult, InputValues } from '@/@types';
+import { AllPeopleFetchResult } from '@/@types';
+import { InputValues } from '@/@types/auth';
 import React, { ChangeEvent, Dispatch, SetStateAction } from 'react'
 
 type Props = {
@@ -10,7 +11,7 @@ type Props = {
 type input = "nameInput" | "speciesInput"
 
 function Search({ data, inputValues, setInputValues }: Props) {
-  const species = data ? Array.from(new Set(data.allPeople.filter((p) => p.species).map((p) => p.species!.name))) : [];
+  const species = data ? Array.from(new Set(data.allPeople.filter((p) => p.species).map((p) => p.species!.name).sort())) : [];
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>, input:input) => {
     setInputValues({
       ...inputValues,

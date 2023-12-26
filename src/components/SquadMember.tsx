@@ -1,12 +1,10 @@
 import { PersonSummary } from '@/@types'
 import Image from 'next/image'
-import React, { useContext, useState } from 'react'
 import Buttons from './Buttons'
-import { SquadContext } from '@/context/squadContext'
-import useInSquad from '@/hooks/useInSquad'
 
 type Props = {
   squadMember: PersonSummary
+  buttons?: boolean
 }
 
 const SquadMember = ({ squadMember }: Props) => {
