@@ -4,12 +4,13 @@ interface Props extends PropsWithChildren {
   state: boolean
   setState: Dispatch<SetStateAction<boolean>>
   title?: string
+  loading?: boolean
 }
 function Modal({ children, state, setState, title = "" }: Props) {
   return state && (
     <div 
       className='fixed top-0 left-0 h-screen w-screen flex justify-center items-start z-40 bg-slate-800 bg-opacity-80'>
-      <div className='max-w-96 mt-24 bg-slate-100 p-3 mx-3 rounded-md border-2 border-slate-800'>
+      <div className='max-w-96 bg-slate-100 p-3 rounded-md border-2 border-slate fixed left-[50%] top-[30%] -translate-x-1/2 -translate-y-2/3'>
         <div className='flex justify-between items-center pb-2 border-b-2 border-slate-900 border-solid'>
           <h3 className="text-left text-xl font-bold">{title}</h3>
           <button className='text-slate-900' onClick={() => setState(false)}>

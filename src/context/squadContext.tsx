@@ -1,5 +1,4 @@
 import { PersonSummary } from "@/@types";
-import findDuplicateSpecies from "@/utils/findDuplicateSpecies";
 import { Dispatch, PropsWithChildren, SetStateAction, createContext, useState } from "react";
 
 interface SquadContext {
@@ -13,7 +12,6 @@ const SquadContext = createContext<SquadContext>({} as SquadContext);
 const SquadContextProvider = ({ children }: PropsWithChildren) => {
   
   const [squad, setSquad] = useState<PersonSummary[]>([]);
-  console.log("squad", squad);
 
   const removeFromSquad = (person: PersonSummary) => {
     setSquad(squad.filter((sm) => sm.id !== person.id));

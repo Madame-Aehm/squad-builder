@@ -22,3 +22,12 @@ export const GET_PERSON = gql`
     }
   }
 `
+
+export const GET_ACTIVE_USER = gql`
+  query getMe {
+    me {
+      id 
+      email
+    }
+  }
+`

@@ -6,7 +6,6 @@ import Modal from "@/components/Modal";
 import PersonListItem from "@/components/PersonListItem";
 import Search from "@/components/Search";
 import SquadMember from "@/components/SquadMember";
-import { AuthContext } from "@/context/authContext";
 import { SquadContext } from "@/context/squadContext";
 import { ALL_PEOPLE } from "@/graphql/queries"
 import filterPeople from "@/utils/filterPeople";
@@ -16,7 +15,6 @@ import { useContext, useEffect, useState } from "react";
 
 export default function Home() {
   const { data, error, loading } = useQuery<AllPeopleFetchResult>(ALL_PEOPLE);
-  console.log(data, error, loading)
   const { squad } = useContext(SquadContext);
   const [showRules, setShowRules] = useState(false);
 
