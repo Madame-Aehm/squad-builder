@@ -62,7 +62,7 @@ export default function Home() {
       
       <div className="self-stretch">
         <Search data={data} inputValues={inputValues} setInputValues={setInputValues} />
-        <div className="bg-slate-50 mt-2 max-h-64 overflow-y-auto rounded-md">
+        <div className="bg-slate-50 mt-2 max-h-72 overflow-y-auto rounded-md">
           { peopleArray.map((person) => {
             return <PersonListItem key={person.id} person={person} />
           }) }
