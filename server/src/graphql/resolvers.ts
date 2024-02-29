@@ -1,51 +1,71 @@
 import 'dotenv/config'
-import proxyFetch from "../utils/proxyFetch.js";
-import { GETALLPEOPLE_RES, GETALLSPECIES_RES, GETPERSON_RES, GETSPECIES_RES } from "../@types/proxyQueries.js";
-import { GETALLPEOPLE, GETALLSPECIES, GETPERSON, GETSPECIES } from "./proxyQueries.js";
-
+import { formatPerson, formatPlanet, formatSpecies } from '../utils/formatTypes.js';
+import fetchAll from '../utils/fetchAll.js';
+import fetchSingle from '../utils/fetchSingle.js';
+import checkCache from '../utils/checkCache.js';
+import extractID from '../utils/extractID.js';
 
 const resolvers = {
   Query: {
-    allPeople: async () => {
+    allPeople: async() => {
+      const isCached = checkCache("allPeople");
+      if (isCached.cached) return isCached.result;
       try {
-        const result = await proxyFetch<GETALLPEOPLE_RES>(GETALLPEOPLE);
-        const formatResult = result.data.allPeople.people.map((p) => {
-          p.starships = p.starshipConnection.starships
-          p.vehicles = p.vehicleConnection.vehicles
-          p.image = `${process.env.BASE_URL}/images/${p.name.toLowerCase().replaceAll(" ", "_")}`;
-          return p
-        })
-        return formatResult;
+        return await fetchAll<Person_Type, Person>("https://swapi.dev/api/people", formatPerson, "allPeople", "person");
       } catch (error) {
         console.log(error);
       }
     },
-    person: async (_, args: { id: string }) => {
-      try {
-        const result = await proxyFetch<GETPERSON_RES>(GETPERSON(args.id))
-        return result.data.person
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    allSpecies: async () => {
-      try {
-        const result = await proxyFetch<GETALLSPECIES_RES>(GETALLSPECIES);
-        return result.data.allSpecies.species;
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    species: async (_, args: { id: string }) => {
+    person: async(_, args: { id: string }) => {
       console.log(args);
+      const isCached = checkCache(`person${args.id}`);
+      if (isCached.cached) return isCached.result;
       try {
-        const result = await proxyFetch<GETSPECIES_RES>(GETSPECIES(args.id))
-        return result.data.species;
+        return await fetchSingle<Person_Type, Person>(`https://swapi.dev/api/people/${args.id}`, formatPerson, "person", args.id);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    allSpecies: async() => {
+      const isCached = checkCache("allSpecies");
+      if (isCached.cached) return isCached.result;
+      try {
+        return await fetchAll<Species_Type, Species>("https://swapi.dev/api/species", formatSpecies, "allSpecies", "species");
+      } catch(error) {
+        console.log(error);
+      }
+    },
+    species: async(_, args: { id: string }) => {
+      const isCached = checkCache(`species${args.id}`);
+      if (isCached.cached) return isCached.result;
+      try {
+        return await fetchSingle<Species_Type, Species>(`https://swapi.dev/api/species/${args.id}`, formatSpecies, "species", args.id);
       } catch (error) {
         console.log(error);
       }
     }
   },
-};
+  Person: {
+    species: async(parent: Person) => {
+      console.log(parent);
+      if (parent.species.length !== 0) {
+        const id = extractID(parent.species[0], "species/");
+        const isCached = checkCache(`species${id}`);
+        if (isCached.cached) return isCached.result;
+        return await fetchSingle<Species_Type, Species>(parent.species[0], formatSpecies, "species", id);
+      }
+      return null
+    },
+    homeworld: async(parent: Person) => {
+      if (parent.homeworld) {
+        const id = extractID(parent.homeworld, "planets/");
+        const isCached = checkCache(`planet${id}`);
+        if (isCached.cached) return isCached.result;
+        return await fetchSingle<Planet_Type, Planet>(parent.homeworld, formatPlanet, "planet", id);
+      }
+      return null
+    }
+  }
+}
 
 export default resolvers

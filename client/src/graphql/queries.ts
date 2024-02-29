@@ -19,6 +19,9 @@ export const GET_PERSON = gql`
     person (id: $id) {
       name
       id
+      species {
+        id
+      }
     }
   }
 `
