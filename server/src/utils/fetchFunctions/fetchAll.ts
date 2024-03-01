@@ -1,4 +1,4 @@
-import cache from "../config/cache.js"
+import cache from "../../config/cache.js"
 
 type fetchAllRes<ResType> = {
   count: number

@@ -23,7 +23,10 @@ interface Planet {
   orbitalPeriod: number | null
   gravity: string
   population: number | null
+  climate: string
+  terrain: string
   surfaceWater: number | null
+  residents: string[]
 }
 
 interface Species {
@@ -38,6 +41,7 @@ interface Species {
   skinColors: string[]
   language: string
   homeworld: string | null
+  people: string[]
 }
 
 interface Starship {
@@ -51,8 +55,10 @@ interface Starship {
   passengers: string
   maxAtmospheringSpeed: number | null
   hyperdriveRating: number | null
+  mglt: number
   cargoCapacity: number | null
   consumables: string
+  pilots: string[]
 }
 
 interface Vehicle {
@@ -60,6 +66,7 @@ interface Vehicle {
   name: string
   model: string
   vehicleClass: string
+  manufacturer: string
   costInCredits: number | null
   length: number | null
   crew: string
@@ -67,4 +74,5 @@ interface Vehicle {
   maxAtmospheringSpeed: number | null
   cargoCapacity: number | null
   consumables: string
+  pilots: string[]
 }

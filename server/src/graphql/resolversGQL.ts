@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import proxyFetch from "../utils/proxyFetch.js";
+import proxyFetch from "../utils/fetchFunctions/proxyFetch.js";
 import { GETALLPEOPLE_RES, GETALLSPECIES_RES, GETPERSON_RES, GETSPECIES_RES } from "../@types/proxyQueries.js";
 import { GETALLPEOPLE, GETALLSPECIES, GETPERSON, GETSPECIES } from "./proxyQueries.js";
 
