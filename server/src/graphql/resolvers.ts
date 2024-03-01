@@ -60,6 +60,22 @@ const resolvers = {
     me: async(_, __, contextValue: { user: User | null }) => {
       return contextValue.user
     },
+    squads: async(_, __, contextValue: { user: User | null }) => {
+      if (!contextValue.user) {
+        throw new GraphQLError("You must be logged in");
+      }
+      try {
+        return await squadModel.find({ user: contextValue.user._id });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    squad: async(_, args: { id: string }, contextValue: { user: User | null }) => {
+      if (!contextValue.user) {
+        throw new GraphQLError("You must be logged in");
+      }
+      return await squadModel.findOne({ user: contextValue.user._id, _id: args.id });
+    },
     allPeople: async() => {
       const isCached = checkCache("allPeople");
       if (isCached.cached) return isCached.result;

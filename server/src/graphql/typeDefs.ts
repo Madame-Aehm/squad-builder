@@ -2,6 +2,8 @@ const typeDefs = `#graphql
   # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
   type Query {
     me: User
+    squads: [Squad]
+    squad(id: ID!): Squad
     person(id: ID!): Person
     allPeople: [Person]
     species(id: ID!): Species
