@@ -13,6 +13,7 @@ import { dirname } from 'path';
 import { MyContext } from './@types/auth.js';
 import { authenticate } from './utils/jwt.js';
 import userModel from './models/user.js';
+import { preFetch } from './utils/fetchFunctions/preFetchAll.js';
 
 const addMiddlewares = (app: Express) => {
   app.use(express.json());
@@ -64,5 +65,6 @@ const startServer = async (app: Express) => {
   const app = express();
   addMiddlewares(app);
   await connectMongoose();
+  await preFetch();
   await startServer(app);
 }) ();

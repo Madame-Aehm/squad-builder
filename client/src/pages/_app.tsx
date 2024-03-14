@@ -9,7 +9,8 @@ import { setContext } from '@apollo/client/link/context';
 
 export default function App({ Component, pageProps }: AppProps) {
   const httpLink = createHttpLink({
-    uri: 'https://fe-case-study.vercel.app/api/graphql',
+    // uri: 'https://fe-case-study.vercel.app/api/graphql',
+    uri: "http://localhost:4000/graphql"
   });
   const authLink = setContext((_, { headers }) => {
     const token = localStorage.getItem('token');

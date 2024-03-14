@@ -37,7 +37,6 @@ const resolvers = {
       }
     },
     species: async (_, args: { id: string }) => {
-      console.log(args);
       try {
         const result = await proxyFetch<GETSPECIES_RES>(GETSPECIES(args.id))
         return result.data.species;

@@ -1,0 +1,1 @@
+export const starwarsRestApiBase = "https://swapi.dev";

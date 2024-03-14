@@ -10,7 +10,7 @@ export const formatPerson = (person: Person_Type): Person => {
     skinColor: person.skin_color,
     height: strToNum(person.height),
     mass: strToNum(person.mass),
-    image: `${process.env.BASE_URL}/images/${person.name.toLowerCase().replaceAll(" ", "_")}`,
+    image: `${process.env.BASE_URL}/images/${person.name.toLowerCase().replaceAll(" ", "_").normalize('NFD').replace(/[\u0300-\u036f]/g, '')}`,
     id: extractID(person.url, "people/")
   };
   return formattedPerson

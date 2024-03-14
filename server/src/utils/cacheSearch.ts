@@ -10,12 +10,12 @@ function cacheSearch<T extends hasID>(key: string, toFind: string[] | string, ex
   if (exists) {
     const all = cache.get(key) as T[];
     if (typeof toFind === "string") {
-      return all.find((e) => e.id === (toFind.includes("swapi.dev/") ? extractID(toFind, ext) : toFind))
+      return all.find((e) => e.id === (toFind.includes("https://") ? extractID(toFind, ext) : toFind))
     }
     return all.filter((item) => {
       let found = false;
       toFind.forEach((urlOrId) => {
-        if (item.id === (urlOrId.includes("swapi.dev/") ? extractID(urlOrId, ext) : urlOrId)) found = true
+        if (item.id === (urlOrId.includes("https://") ? extractID(urlOrId, ext) : urlOrId)) found = true
       });
       return found
     })

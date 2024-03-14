@@ -18,6 +18,7 @@ export const authenticate = (token: string): null | { sub: string } => {
   jwt.verify(token, process.env.JWT_SECRET, (error, decoded) => {
     if (error) {
       console.log(error);
+      return
     }
     id = decoded.sub;
   });
