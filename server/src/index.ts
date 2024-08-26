@@ -31,7 +31,7 @@ const startServer = async (app: Express) => {
 
   await server.start();
   app.use(
-    "/graphql",
+    "/api/graphql",
     expressMiddleware(server, {
       context: async({ req }) => {
         const token = req.headers.authorization;
@@ -48,7 +48,7 @@ const startServer = async (app: Express) => {
       }
     })
   );
-  app.use("/images/:character", (req: Request, res: Response) => {
+  app.use("/api/images/:character", (req: Request, res: Response) => {
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = dirname(__filename);
     const character = req.params.character.toLowerCase().replaceAll(" ", "_");
@@ -57,7 +57,7 @@ const startServer = async (app: Express) => {
 
   const port = process.env.PORT || 4000;
   app.listen(port, () => {
-    console.log(`Explorer: http://localhost:${port}/graphql`);
+    console.log(`Explorer: http://localhost:${port}/api/graphql`);
   });
 };
 

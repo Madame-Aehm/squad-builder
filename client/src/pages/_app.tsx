@@ -6,11 +6,14 @@ import Layout from '@/components/Layout';
 import { SquadContextProvider } from '@/context/squadContext';
 import { AuthContextProvider } from '@/context/authContext';
 import { setContext } from '@apollo/client/link/context';
+import { baseURL } from '@/utils/baseURL';
 
 export default function App({ Component, pageProps }: AppProps) {
+  console.log("MODE >>>>>>", process.env.NODE_ENV)
+  console.log(baseURL);
   const httpLink = createHttpLink({
     // uri: 'https://fe-case-study.vercel.app/api/graphql',
-    uri: "http://localhost:4000/graphql"
+    uri: `${baseURL}/graphql`
   });
   const authLink = setContext((_, { headers }) => {
     const token = localStorage.getItem('token');
