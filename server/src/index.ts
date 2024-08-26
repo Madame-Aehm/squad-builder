@@ -30,6 +30,9 @@ const startServer = async (app: Express) => {
   });
 
   await server.start();
+  app.get("/", (req, res) => {
+    res.status(200).json("hello world")
+  })
   app.use(
     "/api/graphql",
     expressMiddleware(server, {
