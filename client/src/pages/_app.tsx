@@ -9,8 +9,6 @@ import { setContext } from '@apollo/client/link/context';
 import { baseURL } from '@/utils/baseURL';
 
 export default function App({ Component, pageProps }: AppProps) {
-  console.log("MODE >>>>>>", process.env.NODE_ENV)
-  console.log(baseURL);
   const httpLink = createHttpLink({
     // uri: 'https://fe-case-study.vercel.app/api/graphql',
     uri: `${baseURL}/graphql`
