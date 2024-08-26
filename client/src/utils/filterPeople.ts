@@ -1,4 +1,5 @@
-import { InputValues, PersonSummary } from "@/@types";
+import { PersonSummary } from "@/@types";
+import { InputValues } from "@/@types/auth";
 
 const filterPeople = (allPeople: PersonSummary[], inputValues: InputValues) => {
   const result = allPeople.filter((person) => {
