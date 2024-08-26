@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "compile": "tsc",
-    "start": "nodemon src/index.ts",
+    "start": "npm run compile && node ./dist/index.js",
     "build": "rimraf dist && tsc",
     "ts.check": "tsc --project tsconfig.json",
     "add-build": "git add dist",

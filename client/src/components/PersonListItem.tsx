@@ -1,9 +1,7 @@
 import { PersonSummary } from '@/@types'
-import { SquadContext } from '@/context/squadContext'
 import Image from 'next/image'
-import React, { useContext, useState } from 'react'
+import React from 'react'
 import Buttons from './Buttons'
-import useInSquad from '@/hooks/useInSquad'
 
 type Props = {
   person: PersonSummary

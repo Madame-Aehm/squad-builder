@@ -55,9 +55,9 @@ const startServer = async (app: Express) => {
     res.sendFile(__dirname + "/images/" + character + ".jpg");
   })
 
-  const port = process.env.PORT || 4000;
-  app.listen(port, () => {
-    console.log(`Explorer: http://localhost:${port}/api/graphql`);
+  // const port = process.env.PORT || 4000;
+  app.listen(4000, () => {
+    console.log(`Explorer: ${process.env.BASE_URL}/graphql`);
   });
 };
 

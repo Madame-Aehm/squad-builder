@@ -11,7 +11,7 @@ const nextConfig = {
         // protocol: 'https',
         hostname: 'localhost',
         port: '4000',
-        pathname: '/images/**',
+        pathname: '/api/images/**',
       },
     ],
   },
