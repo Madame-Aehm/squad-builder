@@ -13,7 +13,7 @@ export const generateToken = (user: User) => {
   return token
 }
 
-export const authenticate = (token: string): null | { sub: string } => {
+export const authenticate = (token: string): null | string => {
   let id = null
   jwt.verify(token, process.env.JWT_SECRET, (error, decoded) => {
     if (error) {
