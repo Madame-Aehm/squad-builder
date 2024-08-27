@@ -9,7 +9,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'https://squad-builder-server.vercel.app',
+        hostname: 'squad-builder-server.vercel.app',
       },
       {
         // protocol: 'https',
