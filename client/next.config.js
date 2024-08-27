@@ -8,6 +8,10 @@ const nextConfig = {
         hostname: 'fe-case-study-iksl55dvn-lmatheus.vercel.app',
       },
       {
+        protocol: 'https',
+        hostname: 'https://squad-builder-server.vercel.app',
+      },
+      {
         // protocol: 'https',
         hostname: 'localhost',
         port: '4000',
