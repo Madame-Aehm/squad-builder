@@ -13,7 +13,6 @@ import { dirname } from 'path';
 import { authenticate } from './utils/jwt.js';
 import userModel from './models/user.js';
 import { preFetch } from './utils/fetchFunctions/preFetchAll.js';
-const app = express();
 // const addMiddlewares = (app: Express) => {
 //   app.use(express.json());
 //   app.use(express.urlencoded({ extended: true }));
@@ -59,9 +58,9 @@ const startServer = async (app) => {
 };
 (async function () {
     // addMiddlewares(app);
+    const app = express();
     await connectMongoose();
     await preFetch();
     await startServer(app);
 })();
-export default app;
 //# sourceMappingURL=index.js.map

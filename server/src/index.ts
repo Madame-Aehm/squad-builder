@@ -15,7 +15,7 @@ import { authenticate } from './utils/jwt.js';
 import userModel from './models/user.js';
 import { preFetch } from './utils/fetchFunctions/preFetchAll.js';
 
-const app = express();
+
 
 // const addMiddlewares = (app: Express) => {
 //   app.use(express.json());
@@ -70,9 +70,8 @@ const startServer = async (app: Express) => {
 
 (async function () {
   // addMiddlewares(app);
+  const app = express();
   await connectMongoose();
   await preFetch();
   await startServer(app);
 }) ();
-
-export default app;
