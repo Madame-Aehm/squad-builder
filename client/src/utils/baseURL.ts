@@ -1,1 +1,1 @@
-export const baseURL = process.env.NODE_ENV === "development" ? "http://localhost:4000/api" : ""
+export const baseURL = process.env.NODE_ENV === "development" ? "http://localhost:4000/api" : "https://squad-builder-server.vercel.app/api"
