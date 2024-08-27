@@ -17,11 +17,11 @@ import { preFetch } from './utils/fetchFunctions/preFetchAll.js';
 
 const app = express();
 
-const addMiddlewares = (app: Express) => {
-  app.use(express.json());
-  app.use(express.urlencoded({ extended: true }));
-  app.use(cors());
-};
+// const addMiddlewares = (app: Express) => {
+//   app.use(express.json());
+//   app.use(express.urlencoded({ extended: true }));
+//   app.use(cors());
+// };
 
 const startServer = async (app: Express) => {
   const httpServer = http.createServer(app);
@@ -37,6 +37,8 @@ const startServer = async (app: Express) => {
   })
   app.use(
     "/api/graphql",
+    cors<cors.CorsRequest>(),
+    express.json(),
     expressMiddleware(server, {
       context: async({ req }) => {
         const token = req.headers.authorization;
@@ -67,7 +69,7 @@ const startServer = async (app: Express) => {
 };
 
 (async function () {
-  addMiddlewares(app);
+  // addMiddlewares(app);
   await connectMongoose();
   await preFetch();
   await startServer(app);

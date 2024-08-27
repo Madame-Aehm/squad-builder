@@ -13,11 +13,12 @@ import { dirname } from 'path';
 import { authenticate } from './utils/jwt.js';
 import userModel from './models/user.js';
 import { preFetch } from './utils/fetchFunctions/preFetchAll.js';
-const addMiddlewares = (app) => {
-    app.use(express.json());
-    app.use(express.urlencoded({ extended: true }));
-    app.use(cors());
-};
+const app = express();
+// const addMiddlewares = (app: Express) => {
+//   app.use(express.json());
+//   app.use(express.urlencoded({ extended: true }));
+//   app.use(cors());
+// };
 const startServer = async (app) => {
     const httpServer = http.createServer(app);
     const server = new ApolloServer({
@@ -29,7 +30,7 @@ const startServer = async (app) => {
     app.get("/", (req, res) => {
         res.status(200).json("hello world");
     });
-    app.use("/api/graphql", expressMiddleware(server, {
+    app.use("/api/graphql", cors(), express.json(), expressMiddleware(server, {
         context: async ({ req }) => {
             const token = req.headers.authorization;
             if (token) {
@@ -57,10 +58,10 @@ const startServer = async (app) => {
     });
 };
 (async function () {
-    const app = express();
-    addMiddlewares(app);
+    // addMiddlewares(app);
     await connectMongoose();
     await preFetch();
     await startServer(app);
 })();
+export default app;
 //# sourceMappingURL=index.js.map
